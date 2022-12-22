@@ -2,9 +2,12 @@
 #include <sstream>
 #pragma warning(disable : 4996)
 
-void Event::setDescription()
+Event::Event(int day, int month, int year, std::string desc)
 {
-	std::cin >> description;
+	this->day = day;
+	this->month = month;
+	this->year = year;
+	this->description = desc;
 }
 
 std::string Event::getDescription()
@@ -16,5 +19,5 @@ std::string Event::toString()
 {
 	std::stringstream ss;
 	ss << day << "." << month << "." << year;
-	return (ss.str() + description);
+	return (ss.str() + " Название:" + description);
 }

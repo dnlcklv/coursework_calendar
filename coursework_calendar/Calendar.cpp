@@ -1,5 +1,7 @@
 #include "Calendar.h"
-
+#include <ostream>
+#include <istream>
+#include <fstream>
 #include <iomanip>
 
 void Calendar::Run()
@@ -11,10 +13,10 @@ void Calendar::Run()
         char op;
         std::cout
             << "\nN: Следующий месяц"
-            << "\tP: Предыдущий месяц " << "\tI: "
+            << "\tP: Предыдущий месяц" << "\tI:Показать календарь по дате"
             << "\nA: Добавить событие" << "\tL: Показать события"
-            << "\tD: Удалить событие" << "\nS: Сохранить все события"
-            << "\tR: Загрузить событие" << "\tQ: Quit" << "\nВведите команду: ";
+            << "\tD: Удалить событие" << "\nS: Сохранить все события в файл"
+            << "\tR: Загрузить событие" << "\tQ: Выход" << "\nВведите команду: ";
         std::cin >> op;
         if (op >= 'a' && op <= 'z')
             op += ('A' - 'a');
@@ -145,7 +147,6 @@ void Calendar::InputDate()
 
 void Calendar::CreateEvent()
 {
-    Event event;
 
     int year, month, day;
     cout << "Введите дату\nДень: ";
@@ -157,14 +158,11 @@ void Calendar::CreateEvent()
     cout << "Год: ";
     cin >> year;
 
-    event.setDate(day, month, year);
-
     string desc;
     cout << "Введите название события: ";
     cin >> desc;
-    event.setDescription();
 
-    events.push_back(&event);
+    events.push_back(new Event(day,month,year,desc));
 }
 
 void Calendar::ListEvents()
@@ -173,7 +171,7 @@ void Calendar::ListEvents()
     for (auto it = events.begin(); it != events.end(); it++)
     {
         i++;
-        cout << setw(4) << i + 1 << " " << (*it)->toString() << endl;
+        cout << setw(4) <<"[" << i + 1 <<"] " << (*it)->toString() << endl;
     }
 }
 
@@ -202,8 +200,19 @@ void Calendar::DeleteEvents()
 
 void Calendar::Save()
 {
+    std::ofstream fileEvent("event.txt");
+    if (fileEvent.is_open())
+    {
+        for (auto it = events.begin(); it != events.end(); it++)
+        {
+            fileEvent << (*it)->getDay() << "." << (*it)->getMonth() << "." << (*it)->getYear() << "Название: " << (*it)->getDescription();
+        }
+        cout << "Загрузка завершена.";
+    }
+    else cout << "Ошибка открытия файла.";
 }
 
 void Calendar::Load()
 {
+
 }

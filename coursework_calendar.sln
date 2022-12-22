@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "coursework_calendar", "coursework_calendar\coursework_calendar.vcxproj", "{7DF59208-DA4B-407F-A1E7-C954DF002E99}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DF59208-DA4B-407F-A1E7-C954DF002E99}.Debug|x64.ActiveCfg = Debug|x64
+		{7DF59208-DA4B-407F-A1E7-C954DF002E99}.Debug|x64.Build.0 = Debug|x64
+		{7DF59208-DA4B-407F-A1E7-C954DF002E99}.Debug|x86.ActiveCfg = Debug|Win32
+		{7DF59208-DA4B-407F-A1E7-C954DF002E99}.Debug|x86.Build.0 = Debug|Win32
+		{7DF59208-DA4B-407F-A1E7-C954DF002E99}.Release|x64.ActiveCfg = Release|x64
+		{7DF59208-DA4B-407F-A1E7-C954DF002E99}.Release|x64.Build.0 = Release|x64
+		{7DF59208-DA4B-407F-A1E7-C954DF002E99}.Release|x86.ActiveCfg = Release|Win32
+		{7DF59208-DA4B-407F-A1E7-C954DF002E99}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {956D707C-8B9F-4D3A-A921-C8D428596C07}
+	EndGlobalSection
+EndGlobal

@@ -1,8 +1,10 @@
 #include "Calendar.h"
+#include <string>
 #include <ostream>
 #include <istream>
 #include <fstream>
 #include <iomanip>
+#include <vector>
 
 void Calendar::Run()
 {
@@ -10,18 +12,17 @@ void Calendar::Run()
 
 	while (run)
 	{
-        char op;
+        char command;
         std::cout
-            << "\nN: Следующий месяц"
-            << "\tP: Предыдущий месяц" << "\tI:Показать календарь по дате"
-            << "\nA: Добавить событие" << "\tL: Показать события"
-            << "\tD: Удалить событие" << "\nS: Сохранить все события в файл"
-            << "\tR: Загрузить событие" << "\tQ: Выход" << "\nВведите команду: ";
-        std::cin >> op;
-        if (op >= 'a' && op <= 'z')
-            op += ('A' - 'a');
+            << "\nN: Следующий месяц" << "\t\tP: Предыдущий месяц" << "\t\tI: Показать календарь по дате"
+            << "\nA: Добавить событие" << "\t\tL: Показать события" << "\t\tD: Удалить событие" 
+            << "\nS: Сохранить события в файл" << "\tR: Удалить все события" << "\t\tQ: Выход" 
+            << "\nВведите команду: ";
+        std::cin >> command;
+        if (command >= 'a' && command <= 'z')
+            command += ('A' - 'a');
 
-        switch (op) {
+        switch (command) {
         case 'N':
             NextMonth();
             Print();
@@ -35,7 +36,7 @@ void Calendar::Run()
             Print();
             break;
         case 'A':
-            CreateEvent();
+            AddEvent();
             break;
         case 'L':
             ListEvents();
@@ -47,13 +48,13 @@ void Calendar::Run()
             Save();
             break;
         case 'R':
-            Load();
+            ClearEvents();
             break;
         case 'Q':
             run = false;
             break;
         default:
-            std::cout << "Invalid input." << std::endl;
+            std::cout << "Такой команды нет." << std::endl;
             break;
         }
 	}
@@ -122,7 +123,7 @@ void Calendar::PreviousMonth()
 void Calendar::InputDate()
 {
 	int year, month, day;
-	std::cout << "Input date:";
+	std::cout << "Input date:\n";
 	do
 	{
 		std::cout << "Day: ";
@@ -142,37 +143,50 @@ void Calendar::InputDate()
 	} while (year < 0);
 
 	currentDate.setDate(day, month, year);
-
 }
 
-void Calendar::CreateEvent()
+void Calendar::AddEvent()
 {
 
     int year, month, day;
-    cout << "Введите дату\nДень: ";
-    cin >> day;
+    cout << "Введите дату\n";
+    do
+    {
+        cout << "День: ";
+        cin >> day;
+    } while (day < 0 || day > 31);
 
-    cout << "Месяц: ";
-    cin >> month;
+    do 
+    {
+        cout << "Месяц: ";
+        cin >> month;
+    } while (month < 0 || month > 12);
 
-    cout << "Год: ";
-    cin >> year;
+    do
+    {
+        cout << "Год: ";
+        cin >> year;
+    } while (year < 0);
+    
 
     string desc;
-    cout << "Введите название события: ";
+    cout << "Введите название события на английском языке(Вместо пробела ставьте нижнее подчеркивание, например Day_of_Russia ):"; //вроде надо менять свойства консоли, чтоб стринг кушал кириллицу
     cin >> desc;
 
     events.push_back(new Event(day,month,year,desc));
+    cout << "Событие добавлено";
 }
 
 void Calendar::ListEvents()
 {
-    int i = 0;
-    for (auto it = events.begin(); it != events.end(); it++)
+    if (events.size() != 0)
     {
-        i++;
-        cout << setw(4) <<"[" << i + 1 <<"] " << (*it)->toString() << endl;
+        for (auto it = events.begin(); it != events.end(); it++)
+        {
+            cout << (*it)->toString() << endl;
+        }
     }
+    else cout << "Нет событий.";
 }
 
 void Calendar::DeleteEvents()
@@ -193,9 +207,23 @@ void Calendar::DeleteEvents()
                 buf = it;
             }
         }
-        if (select) events.erase(buf);
+        if (select)
+        {
+            events.erase(buf);
+            cout << "Событие " << (*buf)->getDescription() << " удалено";
+        }
+        else cout << "Такого события нет";
     }
     else cout << "Cначала добавьте событие :)";
+}
+
+void Calendar::ClearEvents()
+{
+    if (events.size() != 0)
+    {
+        events.clear();
+    }
+    cout << "События удалены успешно.";
 }
 
 void Calendar::Save()
@@ -205,14 +233,9 @@ void Calendar::Save()
     {
         for (auto it = events.begin(); it != events.end(); it++)
         {
-            fileEvent << (*it)->getDay() << "." << (*it)->getMonth() << "." << (*it)->getYear() << "Название: " << (*it)->getDescription();
+            fileEvent << (*it)->getDay() << "." << (*it)->getMonth() << "." << (*it)->getYear() << " Название: " << (*it)->getDescription() << endl;
         }
         cout << "Загрузка завершена.";
     }
     else cout << "Ошибка открытия файла.";
-}
-
-void Calendar::Load()
-{
-
 }

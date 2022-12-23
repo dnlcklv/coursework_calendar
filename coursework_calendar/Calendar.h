@@ -16,9 +16,10 @@ public:
 	void NextMonth();
 	void PreviousMonth();
 	void InputDate();
-	void CreateEvent();
+	void AddEvent();
 	void ListEvents();
 	void DeleteEvents();
+	void ClearEvents();
 	void Save();
 	void Load();
 };

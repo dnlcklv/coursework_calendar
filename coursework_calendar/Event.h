@@ -8,6 +8,5 @@ public:
 	Event(int day, int month, int year, std::string desc);
 	std::string getDescription();
 	std::string toString();
-
 };
 
